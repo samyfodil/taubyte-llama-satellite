@@ -8,9 +8,11 @@ import (
 
 func main() {
 	ctx := context.Background()
-	ai, err := New(ctx, "gpt4all", "/home/samy/Downloads/GPT4All-13B-snoozy.ggmlv3.q2_K.bin")
+
+	ai, err := New(ctx, "orca-mini", "models/assets/GPT4All-13B-snoozy.ggmlv3.q2_K.bin")
 	if err != nil {
 		panic(err)
 	}
+
 	plugin.Export("llama", ai)
 }

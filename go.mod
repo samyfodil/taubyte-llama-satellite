@@ -5,7 +5,9 @@ go 1.19
 require (
 	bitbucket.org/taubyte/go-builder v0.1.2
 	github.com/go-skynet/go-llama.cpp v0.0.0-20230709163512-6c97625cca76
+	github.com/manifoldco/promptui v0.9.0
 	github.com/otiai10/copy v1.11.0
+	github.com/schollz/progressbar/v3 v3.13.1
 	github.com/taubyte/go-interfaces v0.2.3-pre.v2
 	github.com/taubyte/go-sdk v0.3.8
 	github.com/taubyte/utils v0.1.6
@@ -14,11 +16,7 @@ require (
 	gotest.tools/v3 v3.4.0
 )
 
-replace github.com/go-skynet/go-llama.cpp => ../../RD/go-llama.cpp
-
-replace github.com/taubyte/vm-orbit => ../vm-orbit
-
-replace github.com/taubyte/vm => ../vm
+replace github.com/go-skynet/go-llama.cpp => ./deps/go-llama
 
 require (
 	github.com/Microsoft/go-winio v0.5.2 // indirect
@@ -30,6 +28,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
+	github.com/chzyer/readline v1.5.1 // indirect
 	github.com/containerd/cgroups v1.1.0 // indirect
 	github.com/containerd/containerd v1.6.2 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
@@ -122,13 +121,14 @@ require (
 	github.com/marten-seemann/tcp v0.0.0-20210406111302-dfbc87cc63fd // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.18 // indirect
-	github.com/mattn/go-runewidth v0.0.13 // indirect
+	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/miekg/dns v1.1.53 // indirect
 	github.com/mikioh/tcpinfo v0.0.0-20190314235526-30a79bb1804b // indirect
 	github.com/mikioh/tcpopt v0.0.0-20190314235656-172688c1accc // indirect
 	github.com/minio/blake2b-simd v0.0.0-20160723061019-3f5f724cb5b1 // indirect
 	github.com/minio/sha256-simd v1.0.0 // indirect
+	github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-testing-interface v0.0.0-20171004221916-a61a99592b77 // indirect
 	github.com/mr-tron/base58 v1.2.0 // indirect

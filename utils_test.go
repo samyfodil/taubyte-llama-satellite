@@ -137,17 +137,6 @@ func getFunction(t *testing.T, wasmFile string, rt vm.Runtime, plugin vm.Plugin)
 	return fi
 }
 
-// func checkCall(t *testing.T, ctx goContext.Context, fi vm.FunctionInstance, callVal uint32, expected uint32) {
-// 	ret := fi.Call(ctx, callVal)
-// 	assert.NilError(t, ret.Error())
-
-// 	var output uint32
-// 	err := ret.Reflect(&output)
-// 	assert.NilError(t, err)
-
-// 	assert.Equal(t, output, expected)
-// }
-
 func newTVM(ctx goContext.Context) vm.Service {
 	tns := mocks.New()
 	rslver := resolver.New(tns)

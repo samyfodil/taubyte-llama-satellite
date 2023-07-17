@@ -21,11 +21,11 @@ But Taubyte is not just about making life easier for developers. One of the sign
 Furthermore, Taubyte promotes interoperability across various infrastructures. This characteristic is crucial in today’s tech ecosystem, where being able to integrate and communicate smoothly between different platforms can significantly enhance the value delivered to end-users and clients.`,
 		prompt: "What is Taubyte?",
 	}, {
-		prompt: "what is 1 * 2 + 325 ?",
+		prompt: "How old is the universe?",
 	}, {
-		prompt: "what is 333 + 25 ?",
+		prompt: "Who was Giordano Bruno?",
 	}, {
-		prompt: "what is 333 / 3 ?",
+		prompt: "What is the Drake equation?",
 	}, {
 		prompt: "Give me five prime numbers",
 	},
@@ -47,7 +47,6 @@ func wapredict(qi uint32) uint32 {
 		sdk.WithTopK(90),
 		sdk.WithTopP(0.86),
 		sdk.WithBatch(5),
-		sdk.WithPenalty(1),
 	)
 	if err != nil {
 		panic(err)

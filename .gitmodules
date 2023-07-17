@@ -1,0 +1,4 @@
+[submodule "deps/go-llama"]
+	path = deps/go-llama
+	url = https://github.com/go-skynet/go-llama.cpp
+	ignore = dirty

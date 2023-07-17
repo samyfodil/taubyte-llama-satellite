@@ -1,6 +1,7 @@
 package tests_test
 
 import (
+	"bytes"
 	goContext "context"
 	"fmt"
 	"io"
@@ -34,22 +35,28 @@ func TestPredict(t *testing.T) {
 
 	instance, err := newVM(ctx, tvm)
 	assert.NilError(t, err)
+	defer instance.Close()
 
 	rt, err := instance.Runtime(nil)
 	assert.NilError(t, err)
+	defer rt.Close()
 
 	_, _, err = rt.Attach(plugin)
 	assert.NilError(t, err)
 
 	fi := getFunction(t, "predict", rt, plugin)
 
+	var buf bytes.Buffer
 	go func() {
-		reader := io.MultiReader(rt.Stdout(), rt.Stderr())
+		reader := io.MultiReader(io.TeeReader(rt.Stdout(), &buf), rt.Stderr())
 		p := make([]byte, 1024)
 		for {
 			n, err := reader.Read(p)
-			if err == io.EOF {
-				break
+			if err != nil {
+				if n > 0 {
+					fmt.Print(string(p[:n]))
+				}
+				return
 			}
 			fmt.Print(string(p[:n]))
 		}
@@ -59,10 +66,15 @@ func TestPredict(t *testing.T) {
 
 	assert.NilError(t, ret.Error())
 
+	fmt.Println(
+		"\n--\n",
+		buf.String(),
+	)
+
 }
 
 func TestParallelPredict(t *testing.T) {
-	threads := 4
+	threads := 8
 
 	ctx := goContext.Background()
 	tvm := newTVM(ctx)
@@ -73,38 +85,50 @@ func TestParallelPredict(t *testing.T) {
 	var wg sync.WaitGroup
 	wg.Add(threads)
 
+	bufs := make([]bytes.Buffer, threads)
 	for i := 0; i < threads; i++ {
-		go func() {
+		go func(i int) {
 			defer wg.Done()
 			instance, err := newVM(ctx, tvm)
 			assert.NilError(t, err)
+			defer instance.Close()
 
 			rt, err := instance.Runtime(nil)
 			assert.NilError(t, err)
+			defer rt.Close()
 
 			_, _, err = rt.Attach(plugin)
 			assert.NilError(t, err)
 
 			fi := getFunction(t, "predict", rt, plugin)
 
+			wg.Add(1)
 			go func() {
-				reader := io.MultiReader(rt.Stdout(), rt.Stderr())
+				defer wg.Done()
+				reader := io.MultiReader(io.TeeReader(rt.Stdout(), &bufs[i]), rt.Stderr())
 				p := make([]byte, 1024)
 				for {
 					n, err := reader.Read(p)
-					if err == io.EOF {
-						break
+					if err != nil {
+						if n > 0 {
+							fmt.Print(string(p[:n]))
+						}
+						return
 					}
 					fmt.Print(string(p[:n]))
 				}
 			}()
 
-			ret := fi.Call(ctx, 0)
-
+			ret := fi.Call(ctx, 1+(i%4))
 			assert.NilError(t, ret.Error())
-
-		}()
+		}(i)
 	}
 
 	wg.Wait()
+
+	for i := 0; i < threads; i++ {
+		fmt.Println()
+		fmt.Println(bufs[i].String())
+		fmt.Println()
+	}
 }
