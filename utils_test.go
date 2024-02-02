@@ -9,8 +9,8 @@ import (
 	"strings"
 	"testing"
 
-	builder "bitbucket.org/taubyte/go-builder"
 	"github.com/otiai10/copy"
+	builder "github.com/taubyte/builder"
 	"github.com/taubyte/go-interfaces/services/tns/mocks"
 	"github.com/taubyte/go-interfaces/vm"
 	"github.com/taubyte/utils/id"

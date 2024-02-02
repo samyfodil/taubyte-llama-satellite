@@ -3,20 +3,24 @@ module github.com/samyfodil/taubyte-llama-satellite
 go 1.19
 
 require (
-	bitbucket.org/taubyte/go-builder v0.1.2
 	github.com/go-skynet/go-llama.cpp v0.0.0-20230709163512-6c97625cca76
 	github.com/manifoldco/promptui v0.9.0
-	github.com/otiai10/copy v1.11.0
+	github.com/otiai10/copy v1.12.0
 	github.com/schollz/progressbar/v3 v3.13.1
-	github.com/taubyte/go-interfaces v0.2.3-pre.v2
+	github.com/taubyte/builder v0.0.0-20230714181048-6ea47db67d29
+	github.com/taubyte/go-interfaces v0.2.4
 	github.com/taubyte/go-sdk v0.3.8
 	github.com/taubyte/utils v0.1.6
 	github.com/taubyte/vm v0.2.1
 	github.com/taubyte/vm-orbit v0.1.1
-	gotest.tools/v3 v3.4.0
+	gotest.tools/v3 v3.5.0
 )
 
 replace github.com/go-skynet/go-llama.cpp => ./deps/go-llama
+
+replace github.com/taubyte/vm-orbit => ../vm-orbit
+
+replace github.com/taubyte/vm => ../vm
 
 require (
 	github.com/Microsoft/go-winio v0.5.2 // indirect

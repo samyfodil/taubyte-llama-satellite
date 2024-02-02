@@ -11,6 +11,8 @@ import (
 	"gotest.tools/v3/assert"
 )
 
+//TODO: migrate to using vm-orbit test suite
+
 func init() {
 	if err := initializeAssetPaths(); err != nil {
 		panic(err)
@@ -62,7 +64,7 @@ func TestPredict(t *testing.T) {
 		}
 	}()
 
-	ret := fi.Call(ctx, 0)
+	ret := fi.Call(ctx, 1)
 
 	assert.NilError(t, ret.Error())
 

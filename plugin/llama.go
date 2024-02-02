@@ -107,16 +107,18 @@ func (l *llama) startModelWorker() {
 	l.wg.Add(1)
 	go func() {
 		defer l.wg.Done()
+
 		ai, err := gollama.New(
 			l.modelFile, gollama.SetContext(ContextSize),
 			gollama.SetGPULayers(GPULayers),
 			gollama.EnableF16Memory,
-			gollama.EnableMLock,
 		)
 		if err != nil {
 			l.ready <- err
 			return
 		}
+		defer ai.Free()
+
 		l.ready <- nil
 
 		for req := range l.requests {
@@ -131,6 +133,7 @@ func (l *llama) startModelWorker() {
 					stream := req.response.stream
 					opts := append(
 						toGoLlamaCppOptions(&req.params),
+						gollama.EnableF16KV,
 						gollama.SetThreads(PredictionThreads),
 						gollama.SetTokenCallback(
 							func(token string) bool {

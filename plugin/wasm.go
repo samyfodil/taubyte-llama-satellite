@@ -135,3 +135,7 @@ func (l *llama) W_predict(
 
 	return uint32(sdk.ErrorNone)
 }
+
+func (l *llama) W_version() uint64 {
+	return 0x00000002
+}

@@ -9,7 +9,7 @@ import (
 func main() {
 	ctx := context.Background()
 
-	ai, err := New(ctx, "orca-mini", "models/assets/GPT4All-13B-snoozy.ggmlv3.q2_K.bin")
+	ai, err := New(ctx, "orca-mini", "/tb/plugins/model.bin" /* "/home/samy/Documents/taubyte/RD/llama/llama-2-7b-chat/ggml-model-f32-q4_0.bin" /*"/tb/plugins/model.bin"*/)
 	if err != nil {
 		panic(err)
 	}
